@@ -5,43 +5,51 @@
 .wrapper {
   border: 1px solid brown;
   max-width: 60rem;
-  height: 800px;
+  height: 34rem;
   margin: 2rem auto;
   text-align: center;
 }
 
 header {
   border: 1px solid blue;
-  width: 90%;
-  height: 100px;
+  width: 56rem;
+  height: 6rem;
   margin: 2rem auto;
-  line-height: 100px;
+  line-height: 6rem;
 }
 
 .welcomeWrapper {
   border: 1px solid green;
-  width: 90%;
-  height: 200px;
+  width: 56rem;
+  height: 10rem;
   margin: 2rem auto;
 }
 
-.welcome {
-  border: 1px solid pink;
-  width: 90%;
-  height: 100px;
-  margin: 2rem auto;
-}
+  .welcome {
+    border: 1px solid pink;
+    width: 52rem;
+    height: 6rem;
+    line-height: 6rem;
+    margin: 2rem auto;
+  }
 
 .playWrapper {
   border: 1px solid purple;
-  width: 90%;
-  height: 200px;
+  width: 56rem;
+  height: 10rem;
   margin: 2rem auto;
 }
 
-.play {
-  border: 1px solid red;
-  width: 90%;
-  height: 100px;
-  margin: 2rem auto;
-}
+  .play {
+    border: 1px solid red;
+    width: 52rem;
+    height: 6rem;
+    margin: 2rem auto;
+    
+  }
+    .playButton {
+      border: 1px solid violet;
+      width: 4rem;
+      height: 4rem;
+      margin: 1rem auto;
+    }
