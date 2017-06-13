@@ -44,13 +44,24 @@ I planned phase one to be building the basic flow of the game including the foll
     - Increment the draw scorecard on draw
     - Determine at random which player is to go first
     - Tell the user who's turn it is
+    - Create a 'session' object and set initial values
 
 #### Development Decisions
 
-I decided that each game would be created as a new object, and all persisting values such as scores and player names would be global variables.
+I decided that each game would be created as a new object, and all persisting values such as scores and player names would be stored within an object known as a 'session'.
+
+These variables would persist for as many games as the users wanted, and retained as long as they didn't return home or refresh their browser.
 
 The user is to be guided to each step, and they wont be allowed to proceed to the next until they have successfully completed the current stage.
 
 However, in the case of entering their name, if they do not enter a name, they will be given generic names so they can proceed with the game.
+
+I intended to try to use as few css classes as possible, by trying to push a small number of conventions through the game, so similar items looked and behaved in a similar way, such as the play button and the clicked tiles.
+
+This was partly because I wanted to reuse the same elements as much as possible.
+
+### Phase Two
+
+Phase two was the styling and animation of events in the game, and the general formatting of elements to improve appearance.
 
 

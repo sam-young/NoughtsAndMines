@@ -1,6 +1,45 @@
 
 
 
+var buildNewGame = function () {
+  var game = {
+    //functions
+    checkIfWon: function() {  },
+    clickSquare: function() {  },
+    submitPlayerName: function(number) {  },
+    resetGame: function() {  },
+    returnHome: function() {  }, 
+    //variables
+    tilesSelected: 0,
+    playerCurrentTurn: null,
+    //objects
+    gameBoard: document.getElementById('play'),
+    resetButton: document.getElementById('resetButton'),
+  }
+}
+
+var buildNewSession = function () {
+  var session = {
+    playerOneScore: 0,
+    playerTwoScore: 0,
+    playerOneName: "",
+    playerTwoName: "",
+    drawScore: 0,
+    nameEntryPlayer: "One",
+  }
+}
+
+var getPlayerName = function(playerNumber) {
+
+}
+
+
+//event listeners
+game.playButton.addEventListener('click',function() { getPlayerName(nameEntryPlayer) }
+game.gameBoard.addEventListener('click',clickSquare);
+game.resetButton.addEventListener('click',resetGame);
+game.homeButton.addEventListener('click',returnHome);
+
 
 //present welcome screen with introduction and play button
 
