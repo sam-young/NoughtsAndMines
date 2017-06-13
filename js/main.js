@@ -1,14 +1,18 @@
-
-
-
 var buildNewGame = function () {
   var game = {
     //functions
-    checkIfWon: function() {  },
-    clickSquare: function() {  },
-    submitPlayerName: function(number) {  },
-    resetGame: function() {  },
-    returnHome: function() {  }, 
+    checkIfWon: function() {
+
+    },
+    clickSquare: function() {
+
+    },
+    submitPlayerName: function(number) {
+
+    },
+    resetGame: function() {
+      
+    },
     //variables
     tilesSelected: 0,
     playerCurrentTurn: null,
@@ -20,25 +24,40 @@ var buildNewGame = function () {
 
 var buildNewSession = function () {
   var session = {
+    //variables
     playerOneScore: 0,
     playerTwoScore: 0,
     playerOneName: "",
     playerTwoName: "",
     drawScore: 0,
     nameEntryPlayer: "One",
+    //functions
+    getPlayerName: function(playerNumber) {
+      //if nameEntryPlayer === "One", take user to name entry for player one.
+      //if nameEntryPlayer === "Two", take user to name entry for player two.
+     },
+    submitPlayerName: function(input,playerNumber) {
+      //validate input
+      //if playerOne, set name and call getPlayerName("Two")
+      //if playerTwo, set name and call buildNewGame()
+    }
+    returnHome: function() {
+      //present confirmation message to the user
+      //if confirm, return home, otherwise continue playing
+    }, 
+    playButton: document.getElementById('playButton'),
+    homeButton: document.getElementById('homeButton')
   }
 }
-
-var getPlayerName = function(playerNumber) {
 
 }
 
 
 //event listeners
-game.playButton.addEventListener('click',function() { getPlayerName(nameEntryPlayer) }
+session.playButton.addEventListener('click',function() { getPlayerName(nameEntryPlayer) }
+session.homeButton.addEventListener('click',returnHome);
 game.gameBoard.addEventListener('click',clickSquare);
 game.resetButton.addEventListener('click',resetGame);
-game.homeButton.addEventListener('click',returnHome);
 
 
 //present welcome screen with introduction and play button
