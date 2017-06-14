@@ -45,6 +45,8 @@ I planned phase one to be building the basic flow of the game including the foll
     - Determine at random which player is to go first
     - Tell the user who's turn it is
     - Create a 'session' object and set initial values
+    - Create a 'module' object and set initial values
+    -
 
 #### Development Decisions
 
@@ -59,6 +61,8 @@ However, in the case of entering their name, if they do not enter a name, they w
 I intended to try to use as few css classes as possible, by trying to push a small number of conventions through the game, so similar items looked and behaved in a similar way, such as the play button and the clicked tiles.
 
 This was partly because I wanted to reuse the same elements as much as possible.
+
+Determined that it was necessary to have another object type 'module' to store all variables that need to be maintained before a session necessarily exists.
 
 ### Phase Two
 

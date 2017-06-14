@@ -61,8 +61,9 @@ var buildNewSession = function () {
     drawScore: 0,
     nameEntryPlayer: "One",
     //if there's time
-    gridHeightWidth: 0,
-    sessionTimeSeconds: 0,
+    gridHeightWidth: 3,
+    sessionTimerSeconds: 0,
+    sessionTimerTicket: null,
 
     //functions
     getPlayerName: function(playerNumber) {
@@ -85,12 +86,28 @@ var buildNewSession = function () {
         //return home
       //else
         //continue playing
-    }, 
+    },
+    buildGameBoard: function() {
+      //build grid of specified dimensions according to session.gridHeightWidth
+    },
+    incrementSessionTimerSeconds() {
+      //increment session time by one
+    },
+    startSessionTimerSeconds() {
+      //install timer to call incrementSessionTimerSeconds() each second
+    },
+    //objects
     playButton: document.getElementById('playButton'),
     homeButton: document.getElementById('homeButton'),
     gameBoard: document.getElementById('play'),
     resetButton: document.getElementById('resetButton'),
   }
+  //session setup
+  session.sessionTimerTicket = startSessionTimerSeconds();
+}
+
+var module = {
+
 }
 
 //event listeners
