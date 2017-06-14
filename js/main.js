@@ -2,7 +2,7 @@ var buildNewModule = function () {
   //object
   var module = {
     //module stored elements
-    goButton: document.getElementsByClassName("goButton")[0],
+    goButton: document.getElementById("goButton"),
     message: document.getElementsByClassName("message")[0],
     //module variables
       //none
@@ -85,12 +85,6 @@ var buildNewModule = function () {
         game.resetButton.addEventListener("click",resetGame);
 
         },//end buildNewGame()
-        getPlayerName: function (playerNumber,value) {
-          //if nameEntryPlayer === "One", take user to name entry for player one.
-            //
-          //if nameEntryPlayer === "Two", take user to name entry for player two.
-          console.log("getPlayerName");
-        },
         submitPlayerName: function (input,playerNumber) {
           //validate input
           //if input accepted
@@ -123,6 +117,7 @@ var buildNewModule = function () {
     //change play button to submit button and move it to the right
     module.goButton.textContent = "Submit";
     module.goButton.className = "goRight";
+    module.goButton.id = "";
 
     //place 'input field' on the page, move it to the center
     var inputButton = document.createElement("input");
@@ -143,7 +138,7 @@ var buildNewModule = function () {
     module.message.textContent = "Enter Player One Name"
 
     //change go button event listener to submit player one name
-    module.goButton.addEventListener("click",function () { session.getPlayerName(1,replaceWithPointerToInputBox.value) });
+    module.goButton.addEventListener("click",function () { session.submitPlayerName(1,inputField.value) });
 
     //add homeButton event listener
     session.homeButton.addEventListener("click", session.returnHome);

@@ -46,7 +46,7 @@ header {
     height: 6rem;
     margin: 2rem auto;
   }
-    .goButton {
+    #goButton {
       border: 1px solid violet;
       width: 4rem;
       height: 4rem;
@@ -54,7 +54,7 @@ header {
     }
 
     .goRight {
-      border: 1px solid tomato;
+      border: 1px solid blue;
       width: 4rem;
       height: 4rem;
       float: right;
@@ -72,7 +72,7 @@ header {
     }
 
     .goCenter {
-      border: 1px solid tomato;
+      border: 1px solid purple;
       width: 30rem;
       height: 4rem;
       margin: 1rem auto;
