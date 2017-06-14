@@ -28,7 +28,7 @@ var buildNewModule = function () {
             resetButton: document.getElementsByClassName("resetButton"),
             //game variables
             tilesSelected: 0,
-            playerCurrentTurn: determineFirstPlayer();,
+            playerCurrentTurn: null,
             winningPlayer: "",
             //game functions
             checkIfWon: function (playerNumber) {
@@ -72,26 +72,32 @@ var buildNewModule = function () {
               console.log("resetGame");
             },
             determineFirstPlayer: function () {
-              return ( Math.round(Math.random()) + 1 )
               console.log("determineFirstPlayer");
+              return ( Math.round(Math.random()) + 1 )
             }
           };//end game object
 
+        //determine player's turn
+        game.playerCurrentTurn = game.determineFirstPlayer();
+
         //set message to advise which user is going first
-        module.message.textContent = function(){ 
-          return if ( game.playerCurrentTurn === 1 ) { game.playerOneName } else { game.playerTwoName };
-        } + "'s Turn";
-        
+        debugger;
+        if ( game.playerCurrentTurn === 1 ) {
+          module.message.textContent = ( session.playerOneName + "'s Turn" )
+        } else {
+          module.message.textContent = ( session.playerTwoName + "'s Turn" )
+        };
+
         //add reset button to the top bar, shrink up NOT DRY CODE NOT DRY CODE NOT DRY CODE
         var resetButton = document.createElement("div");
         game.resetButton = resetButton;
-        game.resetButton.className = "goRight";
+        game.resetButton.className = "goRight button";
         game.resetButton.textContent = "Reset";
         var parent = document.getElementsByTagName("header")[0];
         parent.appendChild(resetButton);
         
         //add resetButton event listener
-        game.resetButton.addEventListener("click", game.resetGame;
+        game.resetButton.addEventListener("click", game.resetGame);
         
         //add game event listeners
         game.resetButton.addEventListener("click",resetGame);
@@ -102,11 +108,12 @@ var buildNewModule = function () {
             if ( session.nameEntryPlayer === 1 ) {
               session.playerOneName = input;
               session.nameEntryPlayer = 2;
+              session.inputField.value = "";
               module.message.textContent = "Enter Player Two Name";
             } else {
               session.playerTwoName = input;
-              buildGameBoard();
-              buildNewGame();
+              session.buildGameBoard();
+              session.buildNewGame();
             }
           }
           console.log("submitPlayerName");
@@ -117,12 +124,15 @@ var buildNewModule = function () {
         },
         buildGameBoard: function () {
 
-          //shrink down and delete home and submit buttons
+          //shrink down and delete home and submit buttons, and delete input field.
+          session.homeButton.remove();
+          session.inputField.remove();
+          session.submitButton.remove();
 
           //add home button to the top bar, shrink up NOT DRY CODE NOT DRY CODE NOT DRY CODE
           var homeButton = document.createElement("div");
           session.homeButton = homeButton;
-          session.homeButton.className = "goLeft";
+          session.homeButton.className = "goLeft button";
           session.homeButton.textContent = "Home";
           var parent = document.getElementsByTagName("header")[0];
           parent.appendChild(homeButton);
@@ -130,45 +140,63 @@ var buildNewModule = function () {
           //add homeButton event listener
           session.homeButton.addEventListener("click", session.returnHome);
 
-          //create new element
-          var newBox = document.createElement("div");
-
           //make nine boxes
-
-
+          debugger;
+          for ( var rowIndex = 0 ; rowIndex < 3 ; rowIndex++ ) {
+            var parentBoard = document.getElementsByClassName("board")[0];
+            if ( rowIndex !== 0 ) {
+              var newRow = document.createElement("div");
+              newRow.className = "boardRow";
+              parentBoard.appendChild(newRow);
+            };
+            for ( var columnIndex = 0 ; columnIndex < 3 ; columnIndex++ ) {
+              var parentBoardRow = document.getElementsByClassName("boardRow")[rowIndex];
+              var newBox = document.createElement("div");
+              if ( columnIndex === 0 ) {
+                newBox.className = "goLeft tile";
+              } else if ( columnIndex === 1 ) {
+                newBox.className = "goCenter tile";
+              } else {
+                newBox.className = "goRight tile";
+              }
+              parentBoardRow.appendChild(newBox);
+            }
+          }
           console.log("buildGameBoard");
-        },
-        incrementSessionTimerSeconds() {
-          //increment session time by one
-          console.log("incrementSessionTimerSeconds");
-        },
+        },//end buildGameBoard()
       };//end session object
 
-    //change play button to submit button and move it to the right
-    module.goButton.textContent = "Submit";
-    module.goButton.className = "goRight";
-    module.goButton.id = "";
-
-    //place 'input field' on the page, move it to the center
-    var inputButton = document.createElement("input");
-    session.inputField = inputButton;
-    session.inputField.className = "goCenter";
-    var parent = document.getElementsByClassName("board")[0];
-    parent.insertBefore(inputButton, module.goButton);
+    //remove play button
+    module.goButton.remove();
 
     //place 'home' button on the page, move it to the left NOT DRY CODE NOT DRY CODE NOT DRY CODE
     var homeButton = document.createElement("div");
     session.homeButton = homeButton;
-    session.homeButton.className = "goLeft";
+    session.homeButton.className = "goLeft button";
     session.homeButton.textContent = "Home";
-    var parent = document.getElementsByClassName("board")[0];
-    parent.insertBefore(homeButton, session.inputField);
+    var parent = document.getElementsByClassName("boardRow")[0];
+    parent.appendChild(homeButton);
+
+    //place 'input field' on the page, move it to the center
+    var inputButton = document.createElement("input");
+    session.inputField = inputButton;
+    session.inputField.className = "goCenter input";
+    var parent = document.getElementsByClassName("boardRow")[0];
+    parent.appendChild(inputButton);
+
+    //place 'submit' button on the page, move it to the left NOT DRY CODE NOT DRY CODE NOT DRY CODE
+    var submitButton = document.createElement("div");
+    session.submitButton = submitButton;
+    session.submitButton.className = "goRight button";
+    session.submitButton.textContent = "Submit";
+    var parent = document.getElementsByClassName("boardRow")[0];
+    parent.appendChild(submitButton);
 
     //replace message with 'player one enter your name'
     module.message.textContent = "Enter Player One Name"
 
     //change go button event listener to submit player one name
-    module.goButton.addEventListener("click",function () { var success = session.submitPlayerName(inputField.value) });
+    session.submitButton.addEventListener("click",function () { session.submitPlayerName(session.inputField.value) });
 
     //add homeButton event listener
     session.homeButton.addEventListener("click", session.returnHome);

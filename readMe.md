@@ -82,3 +82,6 @@ Phase two was the styling and animation of events in the game, and the general f
 - Realised that there will never be more than two players in any one game, so the abstraction of the submitPlayerName functions is of little benefit, especially because the process of submitting player one name vs player two's is so different.
 - Decided buildGameBoard should be part of the setup and not part of the buildNewGame function.
 - Determined the resetButton should be created as part of the buildNewGame function as this is a property of the game object.
+- I'm finding placing the various items as properties of their most logical object is helpful as it assists to know where they are stored, born, and modified.
+- Moved all functions to the top of the property definitions list.
+- Discovered that you cannot reference anything in an object until the object has been fully defined.
