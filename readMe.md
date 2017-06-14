@@ -69,3 +69,13 @@ Determined that it was necessary to have another object type 'module' to store a
 Phase two was the styling and animation of events in the game, and the general formatting of elements to improve appearance.
 
 
+### Sequence of events
+
+1. The user lands on the welcome page.
+    1. A new Module is created and initial values are set
+
+
+### General Notes/Realisations
+
+- The function for new game should be stored within the session object, and the function for new session within the module object.
+- 
