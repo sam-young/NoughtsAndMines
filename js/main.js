@@ -2,10 +2,7 @@ var buildNewModule = function () {
   //object
   var module = {
     //module stored elements
-    playButton: document.getElementById("playButton"),
-    homeButton: document.getElementById("homeButton"),
-    gameBoard: document.getElementById("play"),
-    resetButton: document.getElementById("resetButton"),
+    playButton: document.getElementsByClassName("playItem")[0],
     //module variables
       //none
     //module functions
@@ -13,7 +10,8 @@ var buildNewModule = function () {
       //object
       var session = {
         //session stored elements
-          //none
+        homeButton: document.getElementsByClassName("homeButton"),
+        gameBoard: document.getElementsByClassName("play"),
         //session variables
         playerOneScore: 0,
         playerTwoScore: 0,
@@ -29,7 +27,7 @@ var buildNewModule = function () {
           //object
           var game = {
             //game stored elements
-              //none
+            resetButton: document.getElementsByClassName("resetButton"),
             //game variables
             tilesSelected: 0,
             playerCurrentTurn: null,
@@ -126,13 +124,13 @@ var buildNewModule = function () {
     }//end buildNewSession()
   };//end module object
 
-//module actions
-  //none
+//add event listeners
+module.playButton.addEventListener("click",function () { getPlayerName(nameEntryPlayer) });
+session.homeButton.addEventListener("click",returnHome);
+session.gameBoard.addEventListener("click",clickSquare);
+game.resetButton.addEventListener("click",resetGame);
 
 }//end buildNewModule()
 
-//event listeners
-module.playButton.addEventListener("click",function () { getPlayerName(nameEntryPlayer) });
-module.homeButton.addEventListener("click",returnHome);
-module.gameBoard.addEventListener("click",clickSquare);
-module.resetButton.addEventListener("click",resetGame);
+//build new module
+buildNewModule();
