@@ -1,5 +1,5 @@
 var buildNewModule = function () {
-  //created object
+  //object
   var module = {
     //module stored elements
     playButton: document.getElementById("playButton"),
@@ -10,7 +10,7 @@ var buildNewModule = function () {
       //none
     //module functions
     buildNewSession: function () {
-      //created object
+      //object
       var session = {
         //session stored elements
           //none
@@ -26,16 +26,16 @@ var buildNewModule = function () {
         sessionTimerTicket: null,
         //session functions
         buildNewGame: function (reset) {
-          //created object
+          //object
           var game = {
             //game stored elements
               //none
             //game variables
             tilesSelected: 0,
             playerCurrentTurn: null,
-            winningPlayer: ""
+            winningPlayer: "",
             //game functions
-            checkIfWon: function(playerNumber) {
+            checkIfWon: function (playerNumber) {
               //check if any patterns touching the most recent move are winners
               //if yes
                 //set game.winner to <playerNumber>
@@ -58,7 +58,7 @@ var buildNewModule = function () {
                   //present message to <otherPlayer> indicating its their turn
               console.log("checkIfWon");
             },
-            clickSquare: function(event) {
+            clickSquare: function (event) {
               //confirm the clicked square is available to be selected
               //if so
                 //update square to indicate the square has now been clicked
@@ -67,7 +67,7 @@ var buildNewModule = function () {
                 //present message to the user to indicate the square is not available
                 console.log("clickSquare");
             },
-            resetGame: function() {
+            resetGame: function () {
               //present confirmation
               //if confirmed
                 //call buildNewGame(true)
@@ -75,19 +75,19 @@ var buildNewModule = function () {
                 //continue playing
                 console.log("resetGame");
             },
-            determineFirstPlayer: function() {
+            determineFirstPlayer: function () {
               //randomly determine who goes first
               //set game.playerCurrentTurn to this player
               console.log("determineFirstPlayer");
-            },
-          }
-        }
-        getPlayerName: function(playerNumber) {
+            }
+          };//end game object
+        },//end buildNewGame()
+        getPlayerName: function (playerNumber) {
           //if nameEntryPlayer === "One", take user to name entry for player one.
           //if nameEntryPlayer === "Two", take user to name entry for player two.
           console.log("getPlayerName");
-         },
-        submitPlayerName: function(input,playerNumber) {
+        },
+        submitPlayerName: function (input,playerNumber) {
           //validate input
           //if input accepted
             //if playerOne
@@ -97,8 +97,8 @@ var buildNewModule = function () {
           //else if bad input
             //clear and ask for valid input
           console.log("submitPlayerName");
-        },
-        returnHome: function() {
+        },//end submitPlayerName()
+        returnHome: function () {
           //present confirmation message to the user
           //if confirmed
             //return home
@@ -106,7 +106,7 @@ var buildNewModule = function () {
             //continue playing
           console.log("returnHome");
         },
-        buildGameBoard: function() {
+        buildGameBoard: function () {
           //build grid of specified dimensions according to session.gridHeightWidth
           console.log("buildGameBoard");
         },
@@ -117,17 +117,22 @@ var buildNewModule = function () {
         startSessionTimerSeconds() {
           //install timer to call incrementSessionTimerSeconds() each second
           console.log("startSessionTimerSeconds");
-        },
-      }
-    },
-  //session actions
-  session.sessionTimerTicket = startSessionTimerSeconds();
-  }
+        }
+      };//end session object
+
+    //session actions
+    session.sessionTimerTicket = startSessionTimerSeconds();
+
+    }//end buildNewSession()
+  };//end module object
+
 //module actions
-}
+  //none
+
+}//end buildNewModule()
 
 //event listeners
-session.playButton.addEventListener("click",function() { getPlayerName(nameEntryPlayer) }
-session.homeButton.addEventListener("click",returnHome);
-game.gameBoard.addEventListener("click",clickSquare);
-game.resetButton.addEventListener("click",resetGame);
+module.playButton.addEventListener("click",function () { getPlayerName(nameEntryPlayer) });
+module.homeButton.addEventListener("click",returnHome);
+module.gameBoard.addEventListener("click",clickSquare);
+module.resetButton.addEventListener("click",resetGame);
