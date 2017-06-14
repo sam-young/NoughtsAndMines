@@ -80,3 +80,5 @@ Phase two was the styling and animation of events in the game, and the general f
 - The function for new game should be stored within the session object, and the function for new session within the module object.
 - Set the return home button to reload the page as a first step.
 - Realised that there will never be more than two players in any one game, so the abstraction of the submitPlayerName functions is of little benefit, especially because the process of submitting player one name vs player two's is so different.
+- Decided buildGameBoard should be part of the setup and not part of the buildNewGame function.
+- Determined the resetButton should be created as part of the buildNewGame function as this is a property of the game object.

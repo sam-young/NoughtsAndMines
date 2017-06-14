@@ -78,11 +78,21 @@ var buildNewModule = function () {
           };//end game object
 
         //set message to advise which user is going first
-        module.message.textContent = "Player " + game.playerCurrentTurn + "'s Turn!";
-
-        //build game board
-        buildGameBoard();
-
+        module.message.textContent = function(){ 
+          return if ( game.playerCurrentTurn === 1 ) { game.playerOneName } else { game.playerTwoName };
+        } + "'s Turn";
+        
+        //add reset button to the top bar, shrink up NOT DRY CODE NOT DRY CODE NOT DRY CODE
+        var resetButton = document.createElement("div");
+        game.resetButton = resetButton;
+        game.resetButton.className = "goRight";
+        game.resetButton.textContent = "Reset";
+        var parent = document.getElementsByTagName("header")[0];
+        parent.appendChild(resetButton);
+        
+        //add resetButton event listener
+        game.resetButton.addEventListener("click", game.resetGame;
+        
         //add game event listeners
         game.resetButton.addEventListener("click",resetGame);
 
@@ -95,7 +105,8 @@ var buildNewModule = function () {
               module.message.textContent = "Enter Player Two Name";
             } else {
               session.playerTwoName = input;
-               = determineFirstPlayer();
+              buildGameBoard();
+              buildNewGame();
             }
           }
           console.log("submitPlayerName");
@@ -105,7 +116,26 @@ var buildNewModule = function () {
           console.log("returnHome");
         },
         buildGameBoard: function () {
-          //build grid
+
+          //shrink down and delete home and submit buttons
+
+          //add home button to the top bar, shrink up NOT DRY CODE NOT DRY CODE NOT DRY CODE
+          var homeButton = document.createElement("div");
+          session.homeButton = homeButton;
+          session.homeButton.className = "goLeft";
+          session.homeButton.textContent = "Home";
+          var parent = document.getElementsByTagName("header")[0];
+          parent.appendChild(homeButton);
+
+          //add homeButton event listener
+          session.homeButton.addEventListener("click", session.returnHome);
+
+          //create new element
+          var newBox = document.createElement("div");
+
+          //make nine boxes
+
+
           console.log("buildGameBoard");
         },
         incrementSessionTimerSeconds() {
@@ -126,7 +156,7 @@ var buildNewModule = function () {
     var parent = document.getElementsByClassName("board")[0];
     parent.insertBefore(inputButton, module.goButton);
 
-    //place 'home' button on the page, move it to the left
+    //place 'home' button on the page, move it to the left NOT DRY CODE NOT DRY CODE NOT DRY CODE
     var homeButton = document.createElement("div");
     session.homeButton = homeButton;
     session.homeButton.className = "goLeft";
