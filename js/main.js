@@ -23,7 +23,7 @@ var buildNewGame = function (reset) {
           //switch game.playerCurrentTurn to <otherPlayer>
           //present message to <otherPlayer> indicating its their turn
     },
-    clickSquare: function() {
+    clickSquare: function(event) {
       //confirm the clicked square is available to be selected
       //if so
         //update square to indicate the square has now been clicked
@@ -45,9 +45,9 @@ var buildNewGame = function (reset) {
     //variables
     tilesSelected: 0,
     playerCurrentTurn: null,
+    winningPlayer: "",
     //objects
-    gameBoard: document.getElementById('play'),
-    resetButton: document.getElementById('resetButton'),
+
   }
 }
 
@@ -60,6 +60,10 @@ var buildNewSession = function () {
     playerTwoName: "",
     drawScore: 0,
     nameEntryPlayer: "One",
+    //if there's time
+    gridHeightWidth: 0,
+    sessionTimeSeconds: 0,
+
     //functions
     getPlayerName: function(playerNumber) {
       //if nameEntryPlayer === "One", take user to name entry for player one.
@@ -83,7 +87,9 @@ var buildNewSession = function () {
         //continue playing
     }, 
     playButton: document.getElementById('playButton'),
-    homeButton: document.getElementById('homeButton')
+    homeButton: document.getElementById('homeButton'),
+    gameBoard: document.getElementById('play'),
+    resetButton: document.getElementById('resetButton'),
   }
 }
 
