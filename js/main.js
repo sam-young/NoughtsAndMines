@@ -19,10 +19,7 @@ var buildNewModule = function () {
         playerOneName: "",
         playerTwoName: "",
         drawScore: 0,
-        nameEntryPlayer: "One",
-        gridHeightWidth: 3,
-        sessionTimerSeconds: 0,
-        sessionTimerTicket: null,
+        nameEntryPlayer: 1,
         //session functions
         buildNewGame: function (reset) {
           //object
@@ -31,7 +28,7 @@ var buildNewModule = function () {
             resetButton: document.getElementsByClassName("resetButton"),
             //game variables
             tilesSelected: 0,
-            playerCurrentTurn: null,
+            playerCurrentTurn: determineFirstPlayer();,
             winningPlayer: "",
             //game functions
             checkIfWon: function (playerNumber) {
@@ -64,7 +61,7 @@ var buildNewModule = function () {
                 //call checkIfWon(game.playerCurrentTurn)
               //else
                 //present message to the user to indicate the square is not available
-                console.log("clickSquare");
+              console.log("clickSquare");
             },
             resetGame: function () {
               //present confirmation
@@ -72,28 +69,35 @@ var buildNewModule = function () {
                 //call buildNewGame(true)
               //else
                 //continue playing
-                console.log("resetGame");
+              console.log("resetGame");
             },
             determineFirstPlayer: function () {
-              //randomly determine who goes first
-              //set game.playerCurrentTurn to this player
+              return ( Math.round(Math.random()) + 1 )
               console.log("determineFirstPlayer");
             }
           };//end game object
+
+        //set message to advise which user is going first
+        module.message.textContent = "Player " + game.playerCurrentTurn + "'s Turn!";
+
+        //build game board
+        buildGameBoard();
 
         //add game event listeners
         game.resetButton.addEventListener("click",resetGame);
 
         },//end buildNewGame()
-        submitPlayerName: function (input,playerNumber) {
-          //validate input
-          //if input accepted
-            //if playerOne
-              //set name and call getPlayerName("Two")
-            //if playerTwo
-              //set name and call buildNewGame()
-          //else if bad input
-            //clear and ask for valid input
+        submitPlayerName: function (input) {
+          if ( input.length > 0 ) {
+            if ( session.nameEntryPlayer === 1 ) {
+              session.playerOneName = input;
+              session.nameEntryPlayer = 2;
+              module.message.textContent = "Enter Player Two Name";
+            } else {
+              session.playerTwoName = input;
+               = determineFirstPlayer();
+            }
+          }
           console.log("submitPlayerName");
         },//end submitPlayerName()
         returnHome: function () {
@@ -101,17 +105,13 @@ var buildNewModule = function () {
           console.log("returnHome");
         },
         buildGameBoard: function () {
-          //build grid of specified dimensions according to session.gridHeightWidth
+          //build grid
           console.log("buildGameBoard");
         },
         incrementSessionTimerSeconds() {
           //increment session time by one
           console.log("incrementSessionTimerSeconds");
         },
-        startSessionTimerSeconds() {
-          //install timer to call incrementSessionTimerSeconds() each second
-          console.log("startSessionTimerSeconds");
-        }
       };//end session object
 
     //change play button to submit button and move it to the right
@@ -138,7 +138,7 @@ var buildNewModule = function () {
     module.message.textContent = "Enter Player One Name"
 
     //change go button event listener to submit player one name
-    module.goButton.addEventListener("click",function () { session.submitPlayerName(1,inputField.value) });
+    module.goButton.addEventListener("click",function () { var success = session.submitPlayerName(inputField.value) });
 
     //add homeButton event listener
     session.homeButton.addEventListener("click", session.returnHome);
