@@ -25,7 +25,7 @@ header {
   margin: 2rem auto;
 }
 
-  .welcome {
+  .message {
     border: 1px solid pink;
     width: 52rem;
     height: 6rem;
@@ -33,23 +33,48 @@ header {
     margin: 2rem auto;
   }
 
-.playWrapper {
+.boardWrapper {
   border: 1px solid purple;
   width: 56rem;
   height: 10rem;
   margin: 2rem auto;
 }
 
-  .play {
+  .board {
     border: 1px solid red;
     width: 52rem;
     height: 6rem;
     margin: 2rem auto;
-    
   }
-    .playItem {
+    .goButton {
       border: 1px solid violet;
       width: 4rem;
       height: 4rem;
       margin: 1rem auto;
+    }
+
+    .goRight {
+      border: 1px solid tomato;
+      width: 4rem;
+      height: 4rem;
+      float: right;
+      margin: 1rem 1rem 1rem auto;
+      display: inline-block;
+    }
+
+    .goLeft {
+      border: 1px solid tomato;
+      width: 4rem;
+      height: 4rem;
+      float: left;
+      margin: 1rem auto 1rem 1rem;
+      display: inline-block;
+    }
+
+    .goCenter {
+      border: 1px solid tomato;
+      width: 30rem;
+      height: 4rem;
+      margin: 1rem auto;
+      display: inline-block;
     }

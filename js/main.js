@@ -2,7 +2,8 @@ var buildNewModule = function () {
   //object
   var module = {
     //module stored elements
-    playButton: document.getElementsByClassName("playItem")[0],
+    goButton: document.getElementsByClassName("goButton")[0],
+    message: document.getElementsByClassName("message")[0],
     //module variables
       //none
     //module functions
@@ -11,7 +12,7 @@ var buildNewModule = function () {
       var session = {
         //session stored elements
         homeButton: document.getElementsByClassName("homeButton"),
-        gameBoard: document.getElementsByClassName("play"),
+        board: document.getElementsByClassName("board"),
         //session variables
         playerOneScore: 0,
         playerTwoScore: 0,
@@ -84,8 +85,9 @@ var buildNewModule = function () {
         game.resetButton.addEventListener("click",resetGame);
 
         },//end buildNewGame()
-        getPlayerName: function (playerNumber) {
+        getPlayerName: function (playerNumber,value) {
           //if nameEntryPlayer === "One", take user to name entry for player one.
+            //
           //if nameEntryPlayer === "Two", take user to name entry for player two.
           console.log("getPlayerName");
         },
@@ -101,11 +103,7 @@ var buildNewModule = function () {
           console.log("submitPlayerName");
         },//end submitPlayerName()
         returnHome: function () {
-          //present confirmation message to the user
-          //if confirmed
-            //return home
-          //else
-            //continue playing
+          location.reload();
           console.log("returnHome");
         },
         buildGameBoard: function () {
@@ -122,15 +120,39 @@ var buildNewModule = function () {
         }
       };//end session object
 
-    //add session event listeners
-    session.homeButton.addEventListener("click",returnHome);
-    session.gameBoard.addEventListener("click",clickSquare);
+    //change play button to submit button and move it to the right
+    module.goButton.textContent = "Submit";
+    module.goButton.className = "goRight";
+
+    //place 'input field' on the page, move it to the center
+    var inputButton = document.createElement("input");
+    session.inputField = inputButton;
+    session.inputField.className = "goCenter";
+    var parent = document.getElementsByClassName("board")[0];
+    parent.insertBefore(inputButton, module.goButton);
+
+    //place 'home' button on the page, move it to the left
+    var homeButton = document.createElement("div");
+    session.homeButton = homeButton;
+    session.homeButton.className = "goLeft";
+    session.homeButton.textContent = "Home";
+    var parent = document.getElementsByClassName("board")[0];
+    parent.insertBefore(homeButton, session.inputField);
+
+    //replace message with 'player one enter your name'
+    module.message.textContent = "Enter Player One Name"
+
+    //change go button event listener to submit player one name
+    module.goButton.addEventListener("click",function () { session.getPlayerName(1,replaceWithPointerToInputBox.value) });
+
+    //add homeButton event listener
+    session.homeButton.addEventListener("click", session.returnHome);
 
     }//end buildNewSession()
   };//end module object
 
 //add module event listeners
-module.playButton.addEventListener("click",function () { getPlayerName(nameEntryPlayer) });
+module.goButton.addEventListener("click",function () { module.buildNewSession() });
 
 }//end buildNewModule()
 

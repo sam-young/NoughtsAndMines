@@ -78,4 +78,4 @@ Phase two was the styling and animation of events in the game, and the general f
 ### General Notes/Realisations
 
 - The function for new game should be stored within the session object, and the function for new session within the module object.
-- 
+- Set the return home button to reload the page as a first step.
