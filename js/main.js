@@ -12,6 +12,8 @@ var buildNewModule = function () {
     buildNewSession: function () {
       //created object
       var session = {
+        //session stored elements
+          //none
         //session variables
         playerOneScore: 0,
         playerTwoScore: 0,
@@ -19,14 +21,20 @@ var buildNewModule = function () {
         playerTwoName: "",
         drawScore: 0,
         nameEntryPlayer: "One",
-        //if there's time
         gridHeightWidth: 3,
         sessionTimerSeconds: 0,
         sessionTimerTicket: null,
-        //functions
+        //session functions
         buildNewGame: function (reset) {
+          //created object
           var game = {
-            //functions
+            //game stored elements
+              //none
+            //game variables
+            tilesSelected: 0,
+            playerCurrentTurn: null,
+            winningPlayer: ""
+            //game functions
             checkIfWon: function(playerNumber) {
               //check if any patterns touching the most recent move are winners
               //if yes
@@ -72,10 +80,6 @@ var buildNewModule = function () {
               //set game.playerCurrentTurn to this player
               console.log("determineFirstPlayer");
             },
-            //variables
-            tilesSelected: 0,
-            playerCurrentTurn: null,
-            winningPlayer: ""
           }
         }
         getPlayerName: function(playerNumber) {
@@ -116,10 +120,10 @@ var buildNewModule = function () {
         },
       }
     },
-  //session setup - call functions
+  //session actions
   session.sessionTimerTicket = startSessionTimerSeconds();
   }
-//module setup - call functions
+//module actions
 }
 
 //event listeners
