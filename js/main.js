@@ -79,6 +79,10 @@ var buildNewModule = function () {
               console.log("determineFirstPlayer");
             }
           };//end game object
+
+        //add game event listeners
+        game.resetButton.addEventListener("click",resetGame);
+
         },//end buildNewGame()
         getPlayerName: function (playerNumber) {
           //if nameEntryPlayer === "One", take user to name entry for player one.
@@ -118,19 +122,17 @@ var buildNewModule = function () {
         }
       };//end session object
 
-    //session actions
-    session.sessionTimerTicket = startSessionTimerSeconds();
+    //add session event listeners
+    session.homeButton.addEventListener("click",returnHome);
+    session.gameBoard.addEventListener("click",clickSquare);
 
     }//end buildNewSession()
   };//end module object
 
-//add event listeners
+//add module event listeners
 module.playButton.addEventListener("click",function () { getPlayerName(nameEntryPlayer) });
-session.homeButton.addEventListener("click",returnHome);
-session.gameBoard.addEventListener("click",clickSquare);
-game.resetButton.addEventListener("click",resetGame);
 
 }//end buildNewModule()
 
-//build new module
+//call build new module
 buildNewModule();
