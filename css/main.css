@@ -18,9 +18,9 @@ header {
   border: 1px solid blue;
   width: auto;
   min-width: 30rem;
-  height: 6rem;
+  height: 4rem;
   margin: 1rem;
-  line-height: 6rem;
+  line-height: 4rem;
 }
 
 .messageWrapper {
@@ -58,14 +58,14 @@ header {
         border: 1px solid violet;
         width: 4rem;
         height: 4rem;
-        margin: 1rem auto;
+        margin: 0 auto;
         font-size: 1rem;
+        line-height: 4rem;
       }
 
       .goRight {
         border: 1px solid blue;
         float: right;
-        /*margin: 1rem 1rem 1rem auto;*/
         margin: none;
         display: inline-block;
         font-size: 1rem;
@@ -74,7 +74,6 @@ header {
       .goLeft {
         border: 1px solid tomato;
         float: left;
-        /*margin: 1rem auto 1rem 1rem;*/
         margin: none;
         display: inline-block;
         font-size: 1rem;
@@ -82,7 +81,6 @@ header {
 
       .goCenter {
         border: 1px solid purple;
-        /*margin: 1rem auto;*/
         margin: none;
         display: inline-block;
         font-size: 1rem;

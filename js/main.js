@@ -5,8 +5,8 @@ var buildNewModule = function () {
     goButton: document.getElementById("goButton"),
     message: document.getElementsByClassName("message")[0],
     //module variables
-    boardWidthRem: 300,
-    boardHeightRem: 300,
+    boardWidthRem: 30,
+    boardHeightRem: 30,
     //module functions
     buildNewSession: function () {
       //object
@@ -38,6 +38,7 @@ var buildNewModule = function () {
             winningPlayer: "",
             //game functions
             checkIfWon: function (playerNumber) {
+              
               //check if any patterns touching the most recent move are winners
               //if yes
                 //set game.winner to <playerNumber>
@@ -73,7 +74,6 @@ var buildNewModule = function () {
                   }
                   game.checkIfWon(game.playerCurrentTurn);
                 }
-                console.log("clickSquare");
               }
             },
             determineFirstPlayer: function () {
@@ -165,7 +165,7 @@ var buildNewModule = function () {
             var newRow = document.createElement("div");
             newRow.className = "boardRow";
             height = ( module.boardHeightRem / session.rowCount );
-            newRow.style.height = (String(height) + "px");
+            newRow.style.height = (String(height) + "rem");
             parentBoard.appendChild(newRow);
             for ( var columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
               var parentBoardRow = document.getElementsByClassName("boardRow")[rowIndex];
@@ -174,7 +174,7 @@ var buildNewModule = function () {
               newBox.src = "images/blank.png";
               boxTag = "_" + ( rowIndex + 1 ) + "_" + ( columnIndex + 1 )
               width = ( module.boardWidthRem / session.rowCount );
-              newBox.style.width = (String(width) + "px");
+              newBox.style.width = (String(width) + "rem");
               newBox.id = boxTag;
               parentBoardRow.appendChild(newBox);
               //add boxTag to session.boxIdsArray
