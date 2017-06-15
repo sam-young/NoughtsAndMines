@@ -44,56 +44,65 @@ header {
     min-width: 30rem;
     width: auto;
     margin: 1rem;
+    font-size: 0; /*necessary to remove space between boardRows*/
   }
 
     .boardRow {
-      width: 30rem;
+      min-width: 300px;
       border: 1px solid green;
-      display: inline-block;
-      margin: 2px 0;
+      display: block;
+      margin: auto;
+      text-align: center;
     }
       #goButton {
         border: 1px solid violet;
         width: 4rem;
         height: 4rem;
         margin: 1rem auto;
+        font-size: 1rem;
       }
 
       .goRight {
         border: 1px solid blue;
         float: right;
-        margin: 1rem 1rem 1rem auto;
+        /*margin: 1rem 1rem 1rem auto;*/
+        margin: none;
         display: inline-block;
+        font-size: 1rem;
       }
 
       .goLeft {
         border: 1px solid tomato;
         float: left;
-        margin: 1rem auto 1rem 1rem;
+        /*margin: 1rem auto 1rem 1rem;*/
+        margin: none;
         display: inline-block;
+        font-size: 1rem;
       }
 
       .goCenter {
         border: 1px solid purple;
-        margin: 1rem auto;
+        /*margin: 1rem auto;*/
+        margin: none;
         display: inline-block;
+        font-size: 1rem;
       }
 
       .tile {
-        width: 29.9999999%;
-        height: 8rem;
-        min-width: 4rem;
+        height: 100%;
       }
 
       .input {
         width: 60%;
         min-width: 12rem;
         height: 4rem;
+        font-size: 1rem;
       }
 
       .button {
         width: 10%;
         min-width: 4rem;
         height: 4rem;
+        font-size: 1rem;
       }
         

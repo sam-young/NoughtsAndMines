@@ -85,3 +85,4 @@ Phase two was the styling and animation of events in the game, and the general f
 - I'm finding placing the various items as properties of their most logical object is helpful as it assists to know where they are stored, born, and modified.
 - Moved all functions to the top of the property definitions list.
 - Discovered that you cannot reference anything in an object until the object has been fully defined.
+- Decided to index boxes with ids (rowNumber_columnNumber)

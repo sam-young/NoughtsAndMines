@@ -5,7 +5,8 @@ var buildNewModule = function () {
     goButton: document.getElementById("goButton"),
     message: document.getElementsByClassName("message")[0],
     //module variables
-      //none
+    boardWidthRem: 300,
+    boardHeightRem: 300,
     //module functions
     buildNewSession: function () {
       //object
@@ -20,6 +21,7 @@ var buildNewModule = function () {
         playerTwoName: "",
         drawScore: 0,
         nameEntryPlayer: 1,
+        rowCount: 3,
         //session functions
         buildNewGame: function () {
           //object
@@ -133,24 +135,26 @@ var buildNewModule = function () {
           //add homeButton event listener
           session.homeButton.addEventListener("click", session.returnHome);
 
-          //make nine boxes
-          for ( var rowIndex = 0 ; rowIndex < 3 ; rowIndex++ ) {
+          //remove existing row
+          existingRow = document.getElementsByClassName("boardRow")[0];
+          existingRow.remove();
+
+          //make boxes
+          for ( var rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
             var parentBoard = document.getElementsByClassName("board")[0];
-            if ( rowIndex !== 0 ) {
-              var newRow = document.createElement("div");
-              newRow.className = "boardRow";
-              parentBoard.appendChild(newRow);
-            };
-            for ( var columnIndex = 0 ; columnIndex < 3 ; columnIndex++ ) {
+            var newRow = document.createElement("div");
+            newRow.className = "boardRow";
+            height = ( module.boardHeightRem / session.rowCount );
+            newRow.style.height = (String(height) + "px");
+            parentBoard.appendChild(newRow);
+            for ( var columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
               var parentBoardRow = document.getElementsByClassName("boardRow")[rowIndex];
               var newBox = document.createElement("div");
-              if ( columnIndex === 0 ) {
-                newBox.className = "goLeft tile";
-              } else if ( columnIndex === 1 ) {
-                newBox.className = "goCenter tile";
-              } else {
-                newBox.className = "goRight tile";
-              }
+              newBox.className = "goCenter tile";
+              boxTag = ( rowIndex + 1 ) + "_" + ( columnIndex + 1 )
+              width = ( module.boardWidthRem / session.rowCount );
+              newBox.style.width = (String(width) + "px");
+              newBox.id = boxTag;
               parentBoardRow.appendChild(newBox);
             }
           }
