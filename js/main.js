@@ -41,11 +41,9 @@ var buildNewModule = function () {
             winningPlayer: "",
             //game functions
             checkIfWon: function (event) {
-              //check if any patterns touching the most recent move are winners
                 //setup variables
                 var win;
                 var sequential;
-                
                 //across
                 for ( rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
                   for ( columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
@@ -60,7 +58,6 @@ var buildNewModule = function () {
                     }
                   }
                 }
-
                 //down
                 for ( columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
                   for ( rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
@@ -145,9 +142,7 @@ var buildNewModule = function () {
                     rowIndexOuter--
                   }
                 }
-
                 return win;
-
             },
             clickSquare: function (event) {
               tag = event.target.id;
