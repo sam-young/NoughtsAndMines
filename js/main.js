@@ -19,9 +19,13 @@ var buildNewModule = function () {
         playerTwoScore: 0,
         playerOneName: "",
         playerTwoName: "",
+        playerOneImage: "images/1.png",
+        playerTwoImage: "images/2.png",
+        blankImage: "images/blank.png",
         drawScore: 0,
         nameEntryPlayer: 1,
         rowCount: 3,
+        boxIdsArray: [],
         //session functions
         buildNewGame: function () {
           //object
@@ -57,13 +61,20 @@ var buildNewModule = function () {
               console.log("checkIfWon");
             },
             clickSquare: function (event) {
-              //confirm the clicked square is available to be selected
-              //if so
-                //update square to indicate the square has now been clicked
-                //call checkIfWon(game.playerCurrentTurn)
-              //else
-                //present message to the user to indicate the square is not available
-              console.log("clickSquare");
+              tag = event.target.id;
+              className = event.target.className;
+              if ( className === "goCenter tile" ) {
+                if ( !game[tag] ) {
+                  game[tag] = game.playerCurrentTurn;
+                  if ( game.playerCurrentTurn === 1 ) {
+                    event.target.src = session.playerOneImage;
+                  } else {
+                    event.target.src = session.playerTwoImage;
+                  }
+                  game.checkIfWon(game.playerCurrentTurn);
+                }
+                console.log("clickSquare");
+              }
             },
             determineFirstPlayer: function () {
               console.log("determineFirstPlayer");
@@ -96,6 +107,15 @@ var buildNewModule = function () {
 
         //add resetButton event listener
         game.resetButton.addEventListener("click", function() { session.buildNewGame() } );
+
+        //iterate through session.boxIdsArray to create an empty property in the game for each box
+        for ( index = 0 ; index < session.boxIdsArray.length ; index++ ) {
+          game[session.boxIdsArray[index]] === "";
+        }
+
+        //add event listener for boxes
+        var board = document.getElementsByClassName("board")[0];
+        board.addEventListener("click",game.clickSquare);
 
         },//end buildNewGame()
         submitPlayerName: function (input) {
@@ -149,13 +169,16 @@ var buildNewModule = function () {
             parentBoard.appendChild(newRow);
             for ( var columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
               var parentBoardRow = document.getElementsByClassName("boardRow")[rowIndex];
-              var newBox = document.createElement("div");
+              var newBox = document.createElement("img");
               newBox.className = "goCenter tile";
-              boxTag = ( rowIndex + 1 ) + "_" + ( columnIndex + 1 )
+              newBox.src = "images/blank.png";
+              boxTag = "_" + ( rowIndex + 1 ) + "_" + ( columnIndex + 1 )
               width = ( module.boardWidthRem / session.rowCount );
               newBox.style.width = (String(width) + "px");
               newBox.id = boxTag;
               parentBoardRow.appendChild(newBox);
+              //add boxTag to session.boxIdsArray
+              session.boxIdsArray.push(boxTag);
             }
           }
           console.log("buildGameBoard");
