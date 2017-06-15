@@ -86,3 +86,11 @@ Phase two was the styling and animation of events in the game, and the general f
 - Moved all functions to the top of the property definitions list.
 - Discovered that you cannot reference anything in an object until the object has been fully defined.
 - Decided to index boxes with ids (rowNumber_columnNumber)
+
+#### Major Realisation
+
+I realised that making the app into a 'staircase', with each function and object having access to progressively more functions and object properties, had been a major mistake, as now it was very difficult to test, as the items are only available within their own limited scopes.
+
+A better way of doing it would have been to have one global app object, where all functions and monitors were housed, and for this to be used to call all other functions.
+
+

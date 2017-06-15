@@ -42,7 +42,6 @@ var buildNewModule = function () {
             //game functions
             checkIfWon: function (event) {
               //check if any patterns touching the most recent move are winners
-                     alert("Start of Check If Won" + game.boxIdsArray); 
                 //setup variables
                 var win;
                 var sequential;
@@ -50,7 +49,7 @@ var buildNewModule = function () {
                 //across
                 for ( rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
                   for ( columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
-                    var occupied = ( game.boxIdsArray[rowIndex][columnIndex] === game.playerCurrentTurn )
+                    var occupied = ( gameArray[rowIndex][columnIndex] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
                       if ( sequential === session.requiredToWin ) {
@@ -65,7 +64,7 @@ var buildNewModule = function () {
                 //down
                 for ( columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
                   for ( rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
-                    var occupied = ( game.boxIdsArray[rowIndex][columnIndex] === game.playerCurrentTurn )
+                    var occupied = ( gameArray[rowIndex][columnIndex] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
                       if ( sequential === session.requiredToWin ) {
@@ -90,7 +89,7 @@ var buildNewModule = function () {
                   var rowIndexInner = rowIndexOuter;
                   var columnIndexInner = columnIndexOuter;
                   while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
-                    var occupied = ( game.boxIdsArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
+                    var occupied = ( gameArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
                       if ( sequential === session.requiredToWin ) {
@@ -125,7 +124,7 @@ var buildNewModule = function () {
                   var rowIndexInner = rowIndexOuter;
                   var columnIndexInner = columnIndexOuter;
                   while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
-                    var occupied = ( game.boxIdsArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
+                    var occupied = ( gameArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
                       if ( sequential === session.requiredToWin ) {
@@ -178,8 +177,8 @@ var buildNewModule = function () {
                     break;
                   }
                 }
-                //input player's name in the relevant space in game.boxIdsArray
-                game.boxIdsArray[row][column] = game.playerCurrentTurn;
+                //input player's name in the relevant space in gameArray
+                gameArray[row][column] = game.playerCurrentTurn;
 
                 //switch image to the selected image
                 if ( game.playerCurrentTurn === 1 ) {
@@ -190,6 +189,18 @@ var buildNewModule = function () {
                 
                 //check if winner
                 var winner = game.checkIfWon(event);
+                if (winner) {
+                  module.message.textContent = ( game.playerCurrentTurn + " Wins!" )
+                } else {
+                  //change message to indicate turn change
+                  if ( game.playerCurrentTurn === 1 ) {
+                    module.message.textContent = ( session.playerTwoName + "'s Turn" )
+                    game.playerCurrentTurn = 2;
+                  } else {
+                    module.message.textContent = ( session.playerOneName + "'s Turn" )
+                    game.playerCurrentTurn = 1;
+                  };
+                } 
               }
             },
             determineFirstPlayer: function () {
@@ -213,7 +224,7 @@ var buildNewModule = function () {
           var resetButton = document.createElement("div");
           game.resetButton = resetButton;
           game.resetButton.className = "goRight button";
-          game.resetButton.textContent = "Reset";
+          game.resetButton.textContent = "New";
           game.resetButton.id = "reset";
           var parent = document.getElementsByTagName("header")[0];
           parent.appendChild(resetButton);
@@ -225,19 +236,14 @@ var buildNewModule = function () {
         game.resetButton.addEventListener("click", function() { session.buildNewGame() } );
 
         //COPY blank session.boxIdsArray into game
-        delete game.boxIdsArray;
-        game.boxIdsArray = [];
+        delete gameArray;
+        gameArray = [];
         for ( index = 0 ; index < session.boxIdsArray.length ; index++ ) { //loop items in array
-          game.boxIdsArray.push([]);
+          gameArray.push([]);
           for ( ind = 0 ; ind < session.boxIdsArray[index].length ; ind++ ) { //loop items within each item
-            game.boxIdsArray[index].push(session.boxIdsArray[index][ind]);
-            ///////
-            ///////
-            ///////
+            gameArray[index].push(session.boxIdsArray[index][ind]);
           }
         }
-
-        alert("after clearing: " + game.boxIdsArray);
 
         //reset images to blank
         for ( index = 0 ; index < document.getElementsByClassName('tile').length ; index++ ) {
