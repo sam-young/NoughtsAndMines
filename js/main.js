@@ -21,7 +21,7 @@ var buildNewModule = function () {
         drawScore: 0,
         nameEntryPlayer: 1,
         //session functions
-        buildNewGame: function (reset) {
+        buildNewGame: function () {
           //object
           var game = {
             //game stored elements
@@ -63,14 +63,6 @@ var buildNewModule = function () {
                 //present message to the user to indicate the square is not available
               console.log("clickSquare");
             },
-            resetGame: function () {
-              //present confirmation
-              //if confirmed
-                //call buildNewGame(true)
-              //else
-                //continue playing
-              console.log("resetGame");
-            },
             determineFirstPlayer: function () {
               console.log("determineFirstPlayer");
               return ( Math.round(Math.random()) + 1 )
@@ -81,7 +73,6 @@ var buildNewModule = function () {
         game.playerCurrentTurn = game.determineFirstPlayer();
 
         //set message to advise which user is going first
-        debugger;
         if ( game.playerCurrentTurn === 1 ) {
           module.message.textContent = ( session.playerOneName + "'s Turn" )
         } else {
@@ -89,18 +80,20 @@ var buildNewModule = function () {
         };
 
         //add reset button to the top bar, shrink up NOT DRY CODE NOT DRY CODE NOT DRY CODE
-        var resetButton = document.createElement("div");
-        game.resetButton = resetButton;
-        game.resetButton.className = "goRight button";
-        game.resetButton.textContent = "Reset";
-        var parent = document.getElementsByTagName("header")[0];
-        parent.appendChild(resetButton);
-        
+        if ( document.getElementById("reset") === null ) {
+          var resetButton = document.createElement("div");
+          game.resetButton = resetButton;
+          game.resetButton.className = "goRight button";
+          game.resetButton.textContent = "Reset";
+          game.resetButton.id = "reset";
+          var parent = document.getElementsByTagName("header")[0];
+          parent.appendChild(resetButton);
+        } else {
+          game.resetButton = document.getElementById("reset")
+        };
+
         //add resetButton event listener
-        game.resetButton.addEventListener("click", game.resetGame);
-        
-        //add game event listeners
-        game.resetButton.addEventListener("click",resetGame);
+        game.resetButton.addEventListener("click", function() { session.buildNewGame() } );
 
         },//end buildNewGame()
         submitPlayerName: function (input) {
@@ -141,7 +134,6 @@ var buildNewModule = function () {
           session.homeButton.addEventListener("click", session.returnHome);
 
           //make nine boxes
-          debugger;
           for ( var rowIndex = 0 ; rowIndex < 3 ; rowIndex++ ) {
             var parentBoard = document.getElementsByClassName("board")[0];
             if ( rowIndex !== 0 ) {
