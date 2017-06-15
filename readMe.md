@@ -93,4 +93,5 @@ I realised that making the app into a 'staircase', with each function and object
 
 A better way of doing it would have been to have one global app object, where all functions and monitors were housed, and for this to be used to call all other functions.
 
+I found that 
 

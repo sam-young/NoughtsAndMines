@@ -1,4 +1,5 @@
 var gameArray = [];
+var gameWinner = "";
 
 var buildNewModule = function () {
   //object
@@ -147,7 +148,7 @@ var buildNewModule = function () {
             clickSquare: function (event) {
               tag = event.target.id;
               className = event.target.className;
-              if ( tag && !game.winningPlayer ) { 
+              if ( tag && !gameWinner ) { 
                 //get the row of the target
                 var child = document.getElementById(tag);
                 var parent = child.parentNode;
@@ -183,9 +184,10 @@ var buildNewModule = function () {
                 }
                 
                 //check if winner
-                var winner = game.checkIfWon(event);
-                if (winner) {
-                  module.message.textContent = ( game.playerCurrentTurn + " Wins!" )
+                gameWinner = game.checkIfWon(event);
+                if ( gameWinner ) {
+                  if ( game.playerCurrentTurn === 1 ) { winnerName = session.playerOneName } else { winnerName = session.playerTwoName };
+                  module.message.textContent = ( winnerName + " Wins!" )
                 } else {
                   //change message to indicate turn change
                   if ( game.playerCurrentTurn === 1 ) {
@@ -244,6 +246,9 @@ var buildNewModule = function () {
         for ( index = 0 ; index < document.getElementsByClassName('tile').length ; index++ ) {
           document.getElementsByClassName('tile')[index].src = "images/blank.png";
         }
+
+        //clear out gameWinner variable
+        gameWinner = "";
 
         //add event listener for boxes
         var board = document.getElementsByClassName("board")[0];
