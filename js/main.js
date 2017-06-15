@@ -82,7 +82,7 @@ var buildNewModule = function () {
                 //set the starting column to column 1
                 startArray[1] = 0;
                 //initial condition
-                var columnIndexOuter = startArray[1];//only start from the far left
+                var columnIndexOuter = startArray[1];//only start from the far right
                 var columnIndexInner = startArray[1]; //horizontal start of hunt
                 rowIndexOuter = startArray[0]
                 while ( columnIndexOuter < session.rowCount ) {
@@ -115,12 +115,12 @@ var buildNewModule = function () {
                 //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
                 startArray[0] = ( ( session.rowCount - ( session.requiredToWin - 1 ) ) - 1  );
                 //set the starting column to column 1
-                startArray[1] = 0;
+                startArray[1] = ( session.rowCount - 1 );
                 //initial condition
                 var columnIndexOuter = startArray[1];//only start from the far left
                 var columnIndexInner = startArray[1]; //horizontal start of hunt
                 rowIndexOuter = startArray[0]
-                while ( columnIndexOuter < session.rowCount ) {
+                while ( columnIndexOuter > 0 ) {
                   var rowIndexInner = rowIndexOuter;
                   var columnIndexInner = columnIndexOuter;
                   while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
@@ -134,13 +134,13 @@ var buildNewModule = function () {
                       sequential = 0;
                     }
                     if ( columnIndexInner !== session.rowCount ) {
-                      columnIndexInner++;
+                      columnIndexInner--;
                       rowIndexInner++;
                     }
                   }
                   //increment or decrement
                   if ( rowIndexOuter === 0 ) {
-                    columnIndexOuter++
+                    columnIndexOuter--
                   } else {
                     rowIndexOuter--
                   }
@@ -152,7 +152,7 @@ var buildNewModule = function () {
             clickSquare: function (event) {
               tag = event.target.id;
               className = event.target.className;
-              if ( tag ) { 
+              if ( tag && !game.winningPlayer ) { 
                 //get the row of the target
                 var child = document.getElementById(tag);
                 var parent = child.parentNode;
