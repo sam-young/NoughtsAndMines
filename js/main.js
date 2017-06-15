@@ -81,17 +81,42 @@ var buildNewModule = function () {
                 //set the starting column to column 1
                 startArray[1] = 0;
 
+                // var columnIndexOuter = startArray[1];//only start from the far left
+                // for ( rowIndexOuter = startArray[0] ; rowIndexOuter >= 0 ; rowIndexOuter-- ) {
+                //   var rowIndexInner = rowIndexOuter; //decrements each round of outer loop
+                //   var columnIndexInner = startArray[1]; //starts from the far left each time
+                //   while ( rowIndexInner < session.rowCount ) {
+                //     var occupied = ( game.boxIdsArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
+                //     if ( occupied === true ) {
+                //       sequential++
+                //       if ( sequential === session.requiredToWin ) {
+                //         win = true;
+                //       }
+                //     } else {
+                //       sequential = 0;
+                //     }
+                //     if ( columnIndexInner !== session.rowCount ) {
+                //       columnIndexInner++;
+                //       rowIndexInner++;
+                //     }
+                //   }
+                // }
+                
+                //initial condition
                 var columnIndexOuter = startArray[1];//only start from the far left
                 var columnIndexInner = startArray[1]; //horizontal start of hunt
+                rowIndexOuter = startArray[0]
 
-                for ( rowIndexOuter = startArray[0] ; rowIndexOuter >= 0 ; rowIndexOuter-- ) {
-                  var rowIndexInner = rowIndexOuter; //decrements each round of outer loop
-                  var columnIndexInner = startArray[1]; //starts from the far left each time
-                  while ( rowIndexInner < session.rowCount ) {
+                while ( columnIndexOuter < session.rowCount ) {
+
+                  var rowIndexInner = rowIndexOuter;
+                  var columnIndexInner = columnIndexOuter;
+
+                  while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
                     var occupied = ( game.boxIdsArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
-                      if ( sequential === game.requiredToWin ) {
+                      if ( sequential === session.requiredToWin ) {
                         win = true;
                       }
                     } else {
@@ -102,8 +127,15 @@ var buildNewModule = function () {
                       rowIndexInner++;
                     }
                   }
+
+                  //increment or decrement
+                  if ( rowIndexOuter === 0 ) {
+                    columnIndexOuter++
+                  } else {
+                    rowIndexOuter--
+                  }
                 }
-                
+
 
 
 
