@@ -51,7 +51,7 @@ var buildNewModule = function () {
                     var occupied = ( game.boxIdsArray[rowIndex][columnIndex] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
-                      if ( sequential === game.requiredToWin ) {
+                      if ( sequential === session.requiredToWin ) {
                         win = true;
                       }
                     } else {
@@ -66,7 +66,7 @@ var buildNewModule = function () {
                     var occupied = ( game.boxIdsArray[rowIndex][columnIndex] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
-                      if ( sequential === game.requiredToWin ) {
+                      if ( sequential === session.requiredToWin ) {
                         win = true;
                       }
                     } else {
@@ -74,18 +74,20 @@ var buildNewModule = function () {
                     }
                   }
                 }
-                //diagonal top left to bottom right
-                startArray = [];
-                //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
-                startArray[0] = ( ( session.rowCount - ( session.requiredToWin - 1 ) ) - 1  );
-                //set the starting column to column 1
-                startArray[1] = 0;
-
+                // //diagonal top left to bottom right
+                // startArray = [];
+                // //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
+                // startArray[0] = ( ( session.rowCount - ( session.requiredToWin - 1 ) ) - 1  );
+                // //set the starting column to column 1
+                // startArray[1] = 0;
+                // //initial condition
                 // var columnIndexOuter = startArray[1];//only start from the far left
-                // for ( rowIndexOuter = startArray[0] ; rowIndexOuter >= 0 ; rowIndexOuter-- ) {
-                //   var rowIndexInner = rowIndexOuter; //decrements each round of outer loop
-                //   var columnIndexInner = startArray[1]; //starts from the far left each time
-                //   while ( rowIndexInner < session.rowCount ) {
+                // var columnIndexInner = startArray[1]; //horizontal start of hunt
+                // rowIndexOuter = startArray[0]
+                // while ( columnIndexOuter < session.rowCount ) {
+                //   var rowIndexInner = rowIndexOuter;
+                //   var columnIndexInner = columnIndexOuter;
+                //   while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
                 //     var occupied = ( game.boxIdsArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                 //     if ( occupied === true ) {
                 //       sequential++
@@ -100,18 +102,31 @@ var buildNewModule = function () {
                 //       rowIndexInner++;
                 //     }
                 //   }
+                //   //increment or decrement
+                //   if ( rowIndexOuter === 0 ) {
+                //     columnIndexOuter++
+                //   } else {
+                //     rowIndexOuter--
+                //   }
                 // }
-                
+
+                if (win) {
+                  alert('win');
+                }
+
+                //diagonal top right to bottom left
+                startArray = [];
+                //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
+                startArray[0] = ( ( session.rowCount - ( session.requiredToWin - 1 ) ) - 1  );
+                //set the starting column to column 1
+                startArray[1] = 0;
                 //initial condition
                 var columnIndexOuter = startArray[1];//only start from the far left
                 var columnIndexInner = startArray[1]; //horizontal start of hunt
                 rowIndexOuter = startArray[0]
-
                 while ( columnIndexOuter < session.rowCount ) {
-
                   var rowIndexInner = rowIndexOuter;
                   var columnIndexInner = columnIndexOuter;
-
                   while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
                     var occupied = ( game.boxIdsArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                     if ( occupied === true ) {
@@ -127,7 +142,6 @@ var buildNewModule = function () {
                       rowIndexInner++;
                     }
                   }
-
                   //increment or decrement
                   if ( rowIndexOuter === 0 ) {
                     columnIndexOuter++
@@ -137,13 +151,7 @@ var buildNewModule = function () {
                 }
 
 
-
-
-                if (win) {
-                alert('win');
-                }
-                //diagonal
-
+              //diagonal
               //if yes
                 //set game.winner to <playerNumber>
                 //increment <playerNumber>'s score
@@ -227,8 +235,24 @@ var buildNewModule = function () {
         //add resetButton event listener
         game.resetButton.addEventListener("click", function() { session.buildNewGame() } );
 
-        //stamp blank session.boxIdsArray into game
-        game.boxIdsArray = session.boxIdsArray;
+        //COPY blank session.boxIdsArray into game
+
+        game.boxIdsArray = [];
+        for ( index = 0 ; index < session.boxIdsArray.length ; index++ ) { //loop items in array
+          game.boxIdsArray.push([]);
+          for (ind = 0 ; ind < session.boxIdsArray[index].length ; ind++ ) { //loop items within each item
+            game.boxIdsArray[index].push();
+            ///////
+            ///////
+            ///////
+          }
+        }
+
+
+        //reset images to blank
+        for ( index = 0 ; index < document.getElementsByClassName('tile').length ; index++ ) {
+          document.getElementsByClassName('tile')[index].src = "images/blank.png";
+        }
 
         //add event listener for boxes
         var board = document.getElementsByClassName("board")[0];
