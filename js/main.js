@@ -37,43 +37,100 @@ var buildNewModule = function () {
             playerCurrentTurn: null,
             winningPlayer: "",
             //game functions
-            checkIfWon: function (playerNumber) {
-              
+            checkIfWon: function () {
               //check if any patterns touching the most recent move are winners
+              
+                //across
+                var win;
+                var sequential;
+                for ( rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
+                  for ( columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
+                    var occupied = ( game.boxIdsArray[rowIndex][columnIndex] === game.playerCurrentTurn )
+                    if ( occupied === true ) {
+                      sequential++
+                      if ( sequential === 3 ) {
+                        win = true;
+                      } else {
+                        win = false;
+                      }
+                    } else {
+                      sequential = 0;
+                    }
+                  }
+                }
+
+                //across
+                var win;
+                var sequential;
+                for ( columnIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
+                  for ( rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
+                    var occupied = ( game.boxIdsArray[rowIndex][columnIndex] === game.playerCurrentTurn )
+                    if ( occupied === true ) {
+                      sequential++
+                      if ( sequential === 3 ) {
+                        win = true;
+                      } else {
+                        win = false;
+                      }
+                    } else {
+                      sequential = 0;
+                    }
+                  }
+                }
+                if (win) {
+                debugger;
+                }
+                //diagonal
+
               //if yes
                 //set game.winner to <playerNumber>
                 //increment <playerNumber>'s score
                 //present winner's message (includes 'play again?')
-                //
               //else
-                //check if only one space remains
-                //if yes
-                  //check if this space will give win to <otherPlayer>
-                  //if yes
-                    //set game.winner to <playerNumber>
-                    //increment <playerNumber>'s score
-                    //present winner's message (includes 'play again?')
-                  //else
-                    //set game.winner to "draw"
-                    //present draw message (includes 'play again?')
-                //else
-                  //switch game.playerCurrentTurn to <otherPlayer>
-                  //present message to <otherPlayer> indicating its their turn
+                //switch game.playerCurrentTurn to <otherPlayer>
+                //present message to <otherPlayer> indicating its their turn
               console.log("checkIfWon");
             },
             clickSquare: function (event) {
               tag = event.target.id;
               className = event.target.className;
-              if ( className === "goCenter tile" ) {
-                if ( !game[tag] ) {
-                  game[tag] = game.playerCurrentTurn;
-                  if ( game.playerCurrentTurn === 1 ) {
-                    event.target.src = session.playerOneImage;
-                  } else {
-                    event.target.src = session.playerTwoImage;
+              if ( tag ) { 
+                //get the row of the target
+                var child = document.getElementById(tag);
+                var parent = child.parentNode;
+                var children = parent.children;
+                var count = children.length;
+                var child_index;
+                for (var i = 0; i < count; ++i) {
+                  if (child === children[i]) {
+                    column = i;
+                    break;
                   }
-                  game.checkIfWon(game.playerCurrentTurn);
                 }
+                //get the column of the target
+                var child = document.getElementById(tag).parentNode;
+                var parent = child.parentNode;
+                var children = parent.children;
+                var count = children.length;
+                var child_index;
+                for (var i = 0; i < count; ++i) {
+                  if (child === children[i]) {
+                    row = i;
+                    break;
+                  }
+                }
+                //input player's name in the relevant space in game.boxIdsArray
+                game.boxIdsArray[row][column] = game.playerCurrentTurn;
+
+                //switch image to the selected image
+                if ( game.playerCurrentTurn === 1 ) {
+                  event.target.src = session.playerOneImage;
+                } else {
+                  event.target.src = session.playerTwoImage;
+                }
+                
+                //check if winner
+                game.checkIfWon();
               }
             },
             determineFirstPlayer: function () {
@@ -108,10 +165,8 @@ var buildNewModule = function () {
         //add resetButton event listener
         game.resetButton.addEventListener("click", function() { session.buildNewGame() } );
 
-        //iterate through session.boxIdsArray to create an empty property in the game for each box
-        for ( index = 0 ; index < session.boxIdsArray.length ; index++ ) {
-          game[session.boxIdsArray[index]] === "";
-        }
+        //stamp blank session.boxIdsArray into game
+        game.boxIdsArray = session.boxIdsArray;
 
         //add event listener for boxes
         var board = document.getElementsByClassName("board")[0];
@@ -167,6 +222,7 @@ var buildNewModule = function () {
             height = ( module.boardHeightRem / session.rowCount );
             newRow.style.height = (String(height) + "rem");
             parentBoard.appendChild(newRow);
+            session.boxIdsArray.push([]);
             for ( var columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
               var parentBoardRow = document.getElementsByClassName("boardRow")[rowIndex];
               var newBox = document.createElement("img");
@@ -178,7 +234,7 @@ var buildNewModule = function () {
               newBox.id = boxTag;
               parentBoardRow.appendChild(newBox);
               //add boxTag to session.boxIdsArray
-              session.boxIdsArray.push(boxTag);
+              session.boxIdsArray[rowIndex].push("");
             }
           }
           console.log("buildGameBoard");
