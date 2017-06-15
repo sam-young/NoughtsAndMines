@@ -4,18 +4,48 @@
 
 body {
   margin: 2rem;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  color: black;
 }
 
 .wrapper {
-  border: 1px solid brown;
-  max-width: 60rem;
-  min-width: 32rem;
-  margin: 2rem auto;
+  border-radius: 1rem 1rem .25rem .25rem;
+  background-color: rgb(179,179,179);
+  max-width: 34.5rem;
+  min-width: 34.5rem;
+  margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
+  font-size: 0; /*necessary to remove space between boardRows*/
+
+}
+
+.innerWrapper {
+  max-width: 60rem;
+  min-width: 34.5rem;
+  border: 5px;
+  border-color: rgb(20,65,232);
+  border-style: solid;
+  border-radius: 0 0 .25rem .25rem;
+  font-size: 1rem;
+  padding-bottom: 1rem;
+}
+
+.headerBar {
+  border-radius: 1rem 1rem 0 0;
+  border: 5px;
+  border-color: rgb(20,65,232);
+  border-style: none;
+  width: 100%;
+  height: 2rem;
+
+
+
 }
 
 header {
-  border: 1px solid blue;
   width: auto;
   min-width: 30rem;
   height: 4rem;
@@ -24,7 +54,6 @@ header {
 }
 
 .messageWrapper {
-  border: 1px solid green;
   width: auto;
   min-width: 30rem;
   height: 6rem;
@@ -32,7 +61,6 @@ header {
 }
 
   .message {
-    border: 1px solid pink;
     width: auto;
     height: 4rem;
     line-height: 4rem;
@@ -40,31 +68,30 @@ header {
   }
 
   .board {
-    border: 1px solid red;
-    min-width: 30rem;
+    min-width: 30.5rem;
     width: auto;
     margin: 1rem;
     font-size: 0; /*necessary to remove space between boardRows*/
+    marg
   }
 
     .boardRow {
       min-width: 300px;
-      border: 1px solid green;
       display: block;
       margin: auto;
       text-align: center;
     }
       #goButton {
-        border: 1px solid violet;
         width: 4rem;
         height: 4rem;
         margin: 0 auto;
+        margin-bottom: 1rem;
         font-size: 1rem;
         line-height: 4rem;
+
       }
 
       .goRight {
-        border: 1px solid blue;
         float: right;
         margin: none;
         display: inline-block;
@@ -72,15 +99,14 @@ header {
       }
 
       .goLeft {
-        border: 1px solid tomato;
         float: left;
         margin: none;
         display: inline-block;
         font-size: 1rem;
+        line-height: 100%;
       }
 
       .goCenter {
-        border: 1px solid purple;
         margin: none;
         display: inline-block;
         font-size: 1rem;
@@ -91,16 +117,20 @@ header {
       }
 
       .input {
-        width: 60%;
+        width: 70%;
+        text-align: center;
         min-width: 12rem;
         height: 4rem;
         font-size: 1rem;
+        box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5), inset 0px 0px 2px white;
       }
 
       .button {
         width: 10%;
         min-width: 4rem;
         height: 4rem;
+        line-height: 4rem;
         font-size: 1rem;
+        box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5), inset 0px 0px 2px white;
       }
         

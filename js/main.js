@@ -1,3 +1,5 @@
+var gameArray = [];
+
 var buildNewModule = function () {
   //object
   var module = {
@@ -38,9 +40,9 @@ var buildNewModule = function () {
             playerCurrentTurn: null,
             winningPlayer: "",
             //game functions
-            checkIfWon: function () {
+            checkIfWon: function (event) {
               //check if any patterns touching the most recent move are winners
-              
+                     alert("Start of Check If Won" + game.boxIdsArray); 
                 //setup variables
                 var win;
                 var sequential;
@@ -74,46 +76,41 @@ var buildNewModule = function () {
                     }
                   }
                 }
-                // //diagonal top left to bottom right
-                // startArray = [];
-                // //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
-                // startArray[0] = ( ( session.rowCount - ( session.requiredToWin - 1 ) ) - 1  );
-                // //set the starting column to column 1
-                // startArray[1] = 0;
-                // //initial condition
-                // var columnIndexOuter = startArray[1];//only start from the far left
-                // var columnIndexInner = startArray[1]; //horizontal start of hunt
-                // rowIndexOuter = startArray[0]
-                // while ( columnIndexOuter < session.rowCount ) {
-                //   var rowIndexInner = rowIndexOuter;
-                //   var columnIndexInner = columnIndexOuter;
-                //   while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
-                //     var occupied = ( game.boxIdsArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
-                //     if ( occupied === true ) {
-                //       sequential++
-                //       if ( sequential === session.requiredToWin ) {
-                //         win = true;
-                //       }
-                //     } else {
-                //       sequential = 0;
-                //     }
-                //     if ( columnIndexInner !== session.rowCount ) {
-                //       columnIndexInner++;
-                //       rowIndexInner++;
-                //     }
-                //   }
-                //   //increment or decrement
-                //   if ( rowIndexOuter === 0 ) {
-                //     columnIndexOuter++
-                //   } else {
-                //     rowIndexOuter--
-                //   }
-                // }
-
-                if (win) {
-                  alert('win');
+                //diagonal top left to bottom right
+                startArray = [];
+                //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
+                startArray[0] = ( ( session.rowCount - ( session.requiredToWin - 1 ) ) - 1  );
+                //set the starting column to column 1
+                startArray[1] = 0;
+                //initial condition
+                var columnIndexOuter = startArray[1];//only start from the far left
+                var columnIndexInner = startArray[1]; //horizontal start of hunt
+                rowIndexOuter = startArray[0]
+                while ( columnIndexOuter < session.rowCount ) {
+                  var rowIndexInner = rowIndexOuter;
+                  var columnIndexInner = columnIndexOuter;
+                  while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
+                    var occupied = ( game.boxIdsArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
+                    if ( occupied === true ) {
+                      sequential++
+                      if ( sequential === session.requiredToWin ) {
+                        win = true;
+                      }
+                    } else {
+                      sequential = 0;
+                    }
+                    if ( columnIndexInner !== session.rowCount ) {
+                      columnIndexInner++;
+                      rowIndexInner++;
+                    }
+                  }
+                  //increment or decrement
+                  if ( rowIndexOuter === 0 ) {
+                    columnIndexOuter++
+                  } else {
+                    rowIndexOuter--
+                  }
                 }
-
                 //diagonal top right to bottom left
                 startArray = [];
                 //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
@@ -150,16 +147,8 @@ var buildNewModule = function () {
                   }
                 }
 
+                return win;
 
-              //diagonal
-              //if yes
-                //set game.winner to <playerNumber>
-                //increment <playerNumber>'s score
-                //present winner's message (includes 'play again?')
-              //else
-                //switch game.playerCurrentTurn to <otherPlayer>
-                //present message to <otherPlayer> indicating its their turn
-              console.log("checkIfWon");
             },
             clickSquare: function (event) {
               tag = event.target.id;
@@ -200,7 +189,7 @@ var buildNewModule = function () {
                 }
                 
                 //check if winner
-                game.checkIfWon();
+                var winner = game.checkIfWon(event);
               }
             },
             determineFirstPlayer: function () {
@@ -236,18 +225,19 @@ var buildNewModule = function () {
         game.resetButton.addEventListener("click", function() { session.buildNewGame() } );
 
         //COPY blank session.boxIdsArray into game
-
+        delete game.boxIdsArray;
         game.boxIdsArray = [];
         for ( index = 0 ; index < session.boxIdsArray.length ; index++ ) { //loop items in array
           game.boxIdsArray.push([]);
-          for (ind = 0 ; ind < session.boxIdsArray[index].length ; ind++ ) { //loop items within each item
-            game.boxIdsArray[index].push();
+          for ( ind = 0 ; ind < session.boxIdsArray[index].length ; ind++ ) { //loop items within each item
+            game.boxIdsArray[index].push(session.boxIdsArray[index][ind]);
             ///////
             ///////
             ///////
           }
         }
 
+        alert("after clearing: " + game.boxIdsArray);
 
         //reset images to blank
         for ( index = 0 ; index < document.getElementsByClassName('tile').length ; index++ ) {
@@ -266,6 +256,7 @@ var buildNewModule = function () {
               session.nameEntryPlayer = 2;
               session.inputField.value = "";
               module.message.textContent = "Enter Player Two Name";
+              document.getElementsByTagName('input')[0].focus();
             } else {
               session.playerTwoName = input;
               session.buildGameBoard();
@@ -361,6 +352,16 @@ var buildNewModule = function () {
 
     //add homeButton event listener
     session.homeButton.addEventListener("click", session.returnHome);
+
+    //add enterkey event listener
+    document.addEventListener("keyup", function (event) { 
+      if ( ( event.key === "Enter" ) && ( session.playerTwoName === "" )) {
+        session.submitPlayerName(session.inputField.value) 
+      } 
+    });
+
+    //send the cursor to input
+    document.getElementsByTagName('input')[0].focus();
 
     }//end buildNewSession()
   };//end module object
