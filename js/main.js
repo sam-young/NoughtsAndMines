@@ -1,11 +1,15 @@
 var gameArray = [];
 var gameWinner = "";
+var requiredToWin = 0;
+var gridWidth = 0;
 
 var buildNewModule = function () {
   //object
   var module = {
     //module stored elements
     goButton: document.getElementById("goButton"),
+    gridInput: document.getElementsByClassName("gridWidth")[0],
+    requiredToWin: document.getElementsByClassName("requiredToWin")[0],
     message: document.getElementsByClassName("message")[0],
     //module variables
     boardWidthRem: 30,
@@ -27,7 +31,7 @@ var buildNewModule = function () {
         blankImage: "images/blank.png",
         drawScore: 0,
         nameEntryPlayer: 1,
-        rowCount: 10,
+        rowCount: 40,
         requiredToWin: 3,
         boxIdsArray: [],
         //session functions
@@ -43,15 +47,16 @@ var buildNewModule = function () {
             //game functions
             checkIfWon: function (event) {
                 //setup variables
-                var win;
-                var sequential;
+                var win = false;
+                var sequential = 0;
                 //across
-                for ( rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
-                  for ( columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
+                for ( rowIndex = 0 ; rowIndex < gridWidth ; rowIndex++ ) {
+                  sequential = 0;
+                  for ( columnIndex = 0 ; columnIndex < gridWidth ; columnIndex++ ) {
                     var occupied = ( gameArray[rowIndex][columnIndex] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
-                      if ( sequential === session.requiredToWin ) {
+                      if ( sequential === requiredToWin ) {
                         win = true;
                       }
                     } else {
@@ -60,12 +65,13 @@ var buildNewModule = function () {
                   }
                 }
                 //down
-                for ( columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
-                  for ( rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
+                for ( columnIndex = 0 ; columnIndex < gridWidth ; columnIndex++ ) {
+                  sequential = 0;
+                  for ( rowIndex = 0 ; rowIndex < gridWidth ; rowIndex++ ) {
                     var occupied = ( gameArray[rowIndex][columnIndex] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
-                      if ( sequential === session.requiredToWin ) {
+                      if ( sequential === requiredToWin ) {
                         win = true;
                       }
                     } else {
@@ -76,27 +82,28 @@ var buildNewModule = function () {
                 //diagonal top left to bottom right
                 startArray = [];
                 //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
-                startArray[0] = ( ( session.rowCount - ( session.requiredToWin - 1 ) ) - 1  );
+                startArray[0] = ( ( gridWidth - ( requiredToWin - 1 ) ) - 1  );
                 //set the starting column to column 1
                 startArray[1] = 0;
                 //initial condition
                 var columnIndexOuter = startArray[1];//only start from the far right
                 var columnIndexInner = startArray[1]; //horizontal start of hunt
                 rowIndexOuter = startArray[0]
-                while ( columnIndexOuter < session.rowCount ) {
+                sequential = 0;
+                while ( columnIndexOuter < gridWidth ) {
                   var rowIndexInner = rowIndexOuter;
                   var columnIndexInner = columnIndexOuter;
-                  while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
+                  while ( ( rowIndexInner < gridWidth ) && ( columnIndexInner < gridWidth )) {
                     var occupied = ( gameArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
-                      if ( sequential === session.requiredToWin ) {
+                      if ( sequential === requiredToWin ) {
                         win = true;
                       }
                     } else {
                       sequential = 0;
                     }
-                    if ( columnIndexInner !== session.rowCount ) {
+                    if ( columnIndexInner !== gridWidth ) {
                       columnIndexInner++;
                       rowIndexInner++;
                     }
@@ -111,27 +118,28 @@ var buildNewModule = function () {
                 //diagonal top right to bottom left
                 startArray = [];
                 //set the starting row, subtract one due to the array indexing to zero, and one due to the corner square
-                startArray[0] = ( ( session.rowCount - ( session.requiredToWin - 1 ) ) - 1  );
+                startArray[0] = ( ( gridWidth - ( requiredToWin - 1 ) ) - 1  );
                 //set the starting column to column 1
-                startArray[1] = ( session.rowCount - 1 );
+                startArray[1] = ( gridWidth - 1 );
                 //initial condition
                 var columnIndexOuter = startArray[1];//only start from the far left
                 var columnIndexInner = startArray[1]; //horizontal start of hunt
                 rowIndexOuter = startArray[0]
+                sequential = 0;
                 while ( columnIndexOuter > 0 ) {
                   var rowIndexInner = rowIndexOuter;
                   var columnIndexInner = columnIndexOuter;
-                  while ( ( rowIndexInner < session.rowCount ) && ( columnIndexInner < session.rowCount )) {
+                  while ( ( rowIndexInner < gridWidth ) && ( columnIndexInner < gridWidth )) {
                     var occupied = ( gameArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                     if ( occupied === true ) {
                       sequential++
-                      if ( sequential === session.requiredToWin ) {
+                      if ( sequential === requiredToWin ) {
                         win = true;
                       }
                     } else {
                       sequential = 0;
                     }
-                    if ( columnIndexInner !== session.rowCount ) {
+                    if ( columnIndexInner !== gridWidth ) {
                       columnIndexInner--;
                       rowIndexInner++;
                     }
@@ -173,31 +181,33 @@ var buildNewModule = function () {
                     break;
                   }
                 }
-                //input player's name in the relevant space in gameArray
-                gameArray[row][column] = game.playerCurrentTurn;
 
-                //switch image to the selected image
-                if ( game.playerCurrentTurn === 1 ) {
-                  event.target.src = session.playerOneImage;
-                } else {
-                  event.target.src = session.playerTwoImage;
-                }
-                
-                //check if winner
-                gameWinner = game.checkIfWon(event);
-                if ( gameWinner ) {
-                  if ( game.playerCurrentTurn === 1 ) { winnerName = session.playerOneName } else { winnerName = session.playerTwoName };
-                  module.message.textContent = ( winnerName + " Wins!" )
-                } else {
-                  //change message to indicate turn change
+                //check if square already occupied
+                if ( !gameArray[row][column] ) {
+                  //input player's name in the relevant space in gameArray
+                  gameArray[row][column] = game.playerCurrentTurn;
+                  //switch image to the selected image
                   if ( game.playerCurrentTurn === 1 ) {
-                    module.message.textContent = ( session.playerTwoName + "'s Turn" )
-                    game.playerCurrentTurn = 2;
+                    event.target.src = session.playerOneImage;
                   } else {
-                    module.message.textContent = ( session.playerOneName + "'s Turn" )
-                    game.playerCurrentTurn = 1;
-                  };
-                } 
+                    event.target.src = session.playerTwoImage;
+                  }
+                  //check if winner
+                  gameWinner = game.checkIfWon(event);
+                  if ( gameWinner ) {
+                    if ( game.playerCurrentTurn === 1 ) { winnerName = session.playerOneName } else { winnerName = session.playerTwoName };
+                    module.message.textContent = ( winnerName + " Wins!" )
+                  } else {
+                    //change message to indicate turn change
+                    if ( game.playerCurrentTurn === 1 ) {
+                      game.playerCurrentTurn = 2;
+                      module.message.textContent = ( session.playerTwoName + "'s Turn (Player " + game.playerCurrentTurn + ")" )
+                    } else {
+                      game.playerCurrentTurn = 1;
+                      module.message.textContent = ( session.playerOneName + "'s Turn (Player " + game.playerCurrentTurn + ")" )
+                    };
+                  } 
+                }
               }
             },
             determineFirstPlayer: function () {
@@ -211,9 +221,9 @@ var buildNewModule = function () {
 
         //set message to advise which user is going first
         if ( game.playerCurrentTurn === 1 ) {
-          module.message.textContent = ( session.playerOneName + "'s Turn" )
+          module.message.textContent = ( session.playerOneName + "'s Turn (Player " + game.playerCurrentTurn + ")")
         } else {
-          module.message.textContent = ( session.playerTwoName + "'s Turn" )
+          module.message.textContent = ( session.playerTwoName + "'s Turn (Player " + game.playerCurrentTurn + ")" )
         };
 
         //add reset button to the top bar, shrink up NOT DRY CODE NOT DRY CODE NOT DRY CODE
@@ -277,18 +287,21 @@ var buildNewModule = function () {
         },
         buildGameBoard: function () {
 
-          //shrink down and delete home and submit buttons, and delete input field.
+          //delete home and submit buttons, and delete input field.
           session.homeButton.remove();
           session.inputField.remove();
           session.submitButton.remove();
 
-          //add home button to the top bar, shrink up NOT DRY CODE NOT DRY CODE NOT DRY CODE
+          //add home button to the top bar
           var homeButton = document.createElement("div");
           session.homeButton = homeButton;
           session.homeButton.className = "goLeft button";
           session.homeButton.textContent = "Home";
           var parent = document.getElementsByTagName("header")[0];
           parent.appendChild(homeButton);
+
+          //resize header text to 60% to fit buttons either side
+          document.getElementsByClassName('headerText')[0].style.width = "60%";
 
           //add homeButton event listener
           session.homeButton.addEventListener("click", session.returnHome);
@@ -298,21 +311,21 @@ var buildNewModule = function () {
           existingRow.remove();
 
           //make boxes
-          for ( var rowIndex = 0 ; rowIndex < session.rowCount ; rowIndex++ ) {
+          for ( var rowIndex = 0 ; rowIndex < gridWidth ; rowIndex++ ) {
             var parentBoard = document.getElementsByClassName("board")[0];
             var newRow = document.createElement("div");
             newRow.className = "boardRow";
-            height = ( module.boardHeightRem / session.rowCount );
+            height = ( module.boardHeightRem / gridWidth );
             newRow.style.height = (String(height) + "rem");
             parentBoard.appendChild(newRow);
             session.boxIdsArray.push([]);
-            for ( var columnIndex = 0 ; columnIndex < session.rowCount ; columnIndex++ ) {
+            for ( var columnIndex = 0 ; columnIndex < gridWidth ; columnIndex++ ) {
               var parentBoardRow = document.getElementsByClassName("boardRow")[rowIndex];
               var newBox = document.createElement("img");
               newBox.className = "goCenter tile";
               newBox.src = "images/blank.png";
               boxTag = "_" + ( rowIndex + 1 ) + "_" + ( columnIndex + 1 )
-              width = ( module.boardWidthRem / session.rowCount );
+              width = ( module.boardWidthRem / gridWidth );
               newBox.style.width = (String(width) + "rem");
               newBox.id = boxTag;
               parentBoardRow.appendChild(newBox);
@@ -327,7 +340,26 @@ var buildNewModule = function () {
     //remove play button
     module.goButton.remove();
 
-    //place 'home' button on the page, move it to the left NOT DRY CODE NOT DRY CODE NOT DRY CODE
+    //set and remove gridInput
+    if ( ( Number(module.gridInput.value) > 1 ) && ( Number(module.gridInput.value) <= 50 ) ) {
+      gridWidth = Number(module.gridInput.value);
+    } else {
+      gridWidth = 3;
+    }
+    module.gridInput.remove();
+
+    //set and remove requiredToWin
+    if ( ( Number(module.requiredToWin.value) > 1 ) && (  Number(module.gridInput.value) <= gridWidth ) ) {
+      requiredToWin = Number(module.requiredToWin.value);
+    } else {
+      requiredToWin = 3;
+    }
+    module.requiredToWin.remove();
+
+
+
+
+    //place 'home' button on the page, move it to the left
     var homeButton = document.createElement("div");
     session.homeButton = homeButton;
     session.homeButton.className = "goLeft button";
@@ -342,7 +374,7 @@ var buildNewModule = function () {
     var parent = document.getElementsByClassName("boardRow")[0];
     parent.appendChild(inputButton);
 
-    //place 'submit' button on the page, move it to the left NOT DRY CODE NOT DRY CODE NOT DRY CODE
+    //place 'submit' button on the page, move it to the left
     var submitButton = document.createElement("div");
     session.submitButton = submitButton;
     session.submitButton.className = "goRight button";
@@ -371,6 +403,10 @@ var buildNewModule = function () {
 
     }//end buildNewSession()
   };//end module object
+
+//clear inputs
+module.gridInput.value = "";
+module.requiredToWin.value = "";
 
 //add module event listeners
 module.goButton.addEventListener("click",function () { module.buildNewSession() });
