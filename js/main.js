@@ -2,6 +2,7 @@ var gameArray = [];
 var gameWinner = "";
 var requiredToWin = 0;
 var gridWidth = 0;
+var spacesRemain = null;
 
 var buildNewModule = function () {
   //object
@@ -89,10 +90,10 @@ var buildNewModule = function () {
                 var columnIndexOuter = startArray[1];//only start from the far right
                 var columnIndexInner = startArray[1]; //horizontal start of hunt
                 rowIndexOuter = startArray[0]
-                sequential = 0;
                 while ( columnIndexOuter < gridWidth ) {
                   var rowIndexInner = rowIndexOuter;
                   var columnIndexInner = columnIndexOuter;
+                  sequential = 0;
                   while ( ( rowIndexInner < gridWidth ) && ( columnIndexInner < gridWidth )) {
                     var occupied = ( gameArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                     if ( occupied === true ) {
@@ -125,10 +126,10 @@ var buildNewModule = function () {
                 var columnIndexOuter = startArray[1];//only start from the far left
                 var columnIndexInner = startArray[1]; //horizontal start of hunt
                 rowIndexOuter = startArray[0]
-                sequential = 0;
                 while ( columnIndexOuter > 0 ) {
                   var rowIndexInner = rowIndexOuter;
                   var columnIndexInner = columnIndexOuter;
+                  sequential = 0;
                   while ( ( rowIndexInner < gridWidth ) && ( columnIndexInner < gridWidth )) {
                     var occupied = ( gameArray[rowIndexInner][columnIndexInner] === game.playerCurrentTurn )
                     if ( occupied === true ) {
@@ -151,6 +152,17 @@ var buildNewModule = function () {
                     rowIndexOuter--
                   }
                 }
+
+                //check if all squares occupied
+                spacesRemain = false;
+                for ( index = 0 ; index < gameArray.length ; index++ ) { //loop items in array
+                  for ( ind = 0 ; ind < gameArray[index].length ; ind++ ) { //loop items within each item
+                    if ( gameArray[index][ind] === "" ) {
+                      spacesRemain = true;
+                    };
+                  }
+                }
+
                 return win;
             },
             clickSquare: function (event) {
@@ -196,9 +208,11 @@ var buildNewModule = function () {
                   gameWinner = game.checkIfWon(event);
                   if ( gameWinner ) {
                     if ( game.playerCurrentTurn === 1 ) { winnerName = session.playerOneName } else { winnerName = session.playerTwoName };
-                    module.message.textContent = ( winnerName + " Wins!" )
+                    module.message.textContent = ( winnerName + " Wins!" );
+                  } else if ( spacesRemain === false ) {
+                    module.message.textContent = "It's a draw!";
                   } else {
-                    //change message to indicate turn change
+                  //change message to indicate turn change
                     if ( game.playerCurrentTurn === 1 ) {
                       game.playerCurrentTurn = 2;
                       module.message.textContent = ( session.playerTwoName + "'s Turn (Player " + game.playerCurrentTurn + ")" )
