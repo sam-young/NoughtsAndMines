@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+	<title>Noughts &amp; Mines</title>
+	<link rel="stylesheet" href="css/reset.css" type="text/css">
+	<link rel="stylesheet" href="css/main.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+    <button id="resetButton">
+      Reset
+    </button>
+      Noughts &amp; Mines
+    <button id="newGameButton">
+      New Game
+    </button>
+    </header>
+    <div id="inputWrapper">
+      <content id="inputMessage">
+      </content>
+      <input id="inputBox">
+      </input>
+    </div>
+    <div id="board">
+    </div>
+    <div id="instructions">
+    </div>
+    <div class="info">
+      This is the classic game of noughts &amp; crosses, with a difference.
+      The aim is to specify a width/height of a grid of boxes, and then take turns choosing a box, with the goal of selecting a certain number in a row. This number can be chosen on setup.
+    </div>
+    <div class="info">
+    For example, common noughts and crosses has a "Grid Width/Height" of 3, and a "Win Threshold" of 3 as well, meaning a player must select three boxes in a row, either horizontally, vertically, or diagonally, in order to win.
+      In Noughts &amp; Mines, you can change the grid and the goal, to make it more challenging!
+    </div>
+  </div>
+<script src="js/main.js"></script>
+</body>
+</html>
